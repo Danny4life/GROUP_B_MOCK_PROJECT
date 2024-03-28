@@ -1,4 +1,7 @@
 package com.evaloper.TodoApp.repository;
 
-public class TaskRepository {
+import org.springframework.stereotype.Repository;
+
+@Repository
+public interface TaskRepository {
 }
