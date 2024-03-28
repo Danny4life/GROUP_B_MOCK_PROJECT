@@ -2,10 +2,7 @@ package com.evaloper.TodoApp.entities;
 
 import com.evaloper.TodoApp.enums.PriorityLevel;
 import com.evaloper.TodoApp.enums.TaskStatus;
-import jakarta.persistence.Entity;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDate;
@@ -19,6 +16,9 @@ import java.time.LocalTime;
 @Entity
 @Table(name = "task_tbl")
 public class Task {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
     private String title;
     private String description;
     private LocalDate dateCreated;
