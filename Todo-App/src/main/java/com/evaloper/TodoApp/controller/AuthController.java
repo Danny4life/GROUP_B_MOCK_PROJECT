@@ -13,9 +13,17 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/users")
+@RequestMapping("/auth")
 @RequiredArgsConstructor
-
-public class UserController {
+public class AuthController {
     private final UserService userService;
+    @PostMapping("/register")
+    public ResponseEntity<AuthResponse> register(@RequestBody RegisterRequestDto registerRequestDTO){
+        return ResponseEntity.ok(userService.registerUser(registerRequestDTO));
+    }
+
+    @PostMapping("/login")
+    public ResponseEntity<LoginResponse> login(@RequestBody LoginRequestDto loginRequestDTO){
+        return ResponseEntity.ok(userService.login(loginRequestDTO));
+    }
 }
