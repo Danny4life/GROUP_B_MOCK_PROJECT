@@ -1,4 +1,4 @@
 package com.evaloper.TodoApp.services.Impl;
 
-public class UserServiceImpl {
+public class UserServiceImpl{
 }

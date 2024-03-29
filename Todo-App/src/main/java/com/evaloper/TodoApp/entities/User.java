@@ -3,14 +3,14 @@ package com.evaloper.TodoApp.entities;
 import jakarta.persistence.*;
 import lombok.*;
 
+@Entity
 @AllArgsConstructor
 @NoArgsConstructor
-@Builder
 @Getter
 @Setter
-@Entity
+@Builder
 @Table(name = "user_tbl")
-public class User {
+public class User{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -19,7 +19,7 @@ public class User {
     @Column(unique = true)
     private String email;
     private String password;
-    private Long phoneNo;
+    private String phoneNo;
 
 
 }
