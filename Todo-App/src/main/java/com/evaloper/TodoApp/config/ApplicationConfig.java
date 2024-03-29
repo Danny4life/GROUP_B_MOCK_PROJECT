@@ -1,5 +1,6 @@
 package com.evaloper.TodoApp.config;
 
+
 import com.evaloper.TodoApp.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -43,4 +44,4 @@ public class ApplicationConfig {
             throws Exception {
         return config.getAuthenticationManager();
     }
-}
+
