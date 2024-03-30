@@ -28,6 +28,7 @@ public class UserServiceImpl implements UserService {
                 .lastName(registerRequestDTO.getLastName())
                 .email(registerRequestDTO.getEmail())
                 .password(encoder.encode(registerRequestDTO.getPassword()))
+                .phoneNo(registerRequestDTO.getPhoneNo())
                 .build();
 
         User savedUser = userRepository.save(userEntity);

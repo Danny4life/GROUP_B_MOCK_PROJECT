@@ -10,9 +10,12 @@ import com.evaloper.TodoApp.repository.UserRepository;
 import com.evaloper.TodoApp.services.TaskService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -45,6 +48,32 @@ public class TaskServiceImpl implements TaskService {
     public List<TaskDto> getAllCompletedTasks() {
         List<Task> completedTasks = taskRepository.findByTaskStatus(TaskStatus.COMPLETED);
         return convertToTaskDtoList(completedTasks);
+    }
+
+
+    @Override
+    public Task updateTask(Long id, TaskDto taskDto) {
+        Optional<Task> taskOptional = taskRepository.findById(id);
+        if (taskOptional.isPresent()) {
+            Task existingTask = taskOptional.get();
+            existingTask.setTitle(taskDto.getTitle());
+            existingTask.setDescription(taskDto.getDescription());
+            existingTask.setDateCreated(taskDto.getDateCreated());
+            existingTask.setTimeCreated(taskDto.getTimeCreated());
+            existingTask.setPriorityLevel(taskDto.getPriorityLevel());
+            existingTask.setTaskStatus(taskDto.getTaskStatus());
+            // Assuming you are not associating the task with a specific user anymore
+            return taskRepository.save(existingTask);
+        } else {
+            return null;
+        }
+    }
+
+
+    @Override
+    public Task viewTaskByTitle(String title) {
+        Optional<Task> taskOptional = taskRepository.findByTitle(title);
+        return taskOptional.orElse(null);
     }
 
     private List<TaskDto> convertToTaskDtoList(List<Task> tasks) {
