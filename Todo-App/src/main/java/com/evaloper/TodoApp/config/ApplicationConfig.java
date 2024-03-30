@@ -44,4 +44,5 @@ public class ApplicationConfig {
             throws Exception {
         return config.getAuthenticationManager();
     }
+}
 

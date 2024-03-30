@@ -23,7 +23,9 @@ public class Task {
     private String description;
     private LocalDate dateCreated;
     private LocalTime timeCreated;
+    @Enumerated(EnumType.STRING)
     private PriorityLevel priorityLevel;
+    @Enumerated(EnumType.STRING)
     private TaskStatus taskStatus;
     @ManyToOne
     @JoinColumn(name = "user_id")

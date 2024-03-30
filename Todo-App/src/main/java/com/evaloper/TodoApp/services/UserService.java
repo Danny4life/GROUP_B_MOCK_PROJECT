@@ -8,4 +8,5 @@ import com.evaloper.TodoApp.dto.RegisterRequestDto;
 public interface UserService {
     AuthResponse registerUser(RegisterRequestDto registerRequestDTO);
     LoginResponse login(LoginRequestDto loginRequestDTO);
+
 }
