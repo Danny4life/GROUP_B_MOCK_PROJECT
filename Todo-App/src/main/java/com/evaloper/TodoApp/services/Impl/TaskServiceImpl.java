@@ -76,6 +76,17 @@ public class TaskServiceImpl implements TaskService {
         return taskOptional.orElse(null);
     }
 
+    @Override
+    public List<TaskDto> filterTaskByStatus(TaskStatus taskStatus) {
+        List<Task> filteredTask = taskRepository.findByTaskStatus(taskStatus);
+        return convertToTaskDtoList(filteredTask);
+    }
+
+    @Override
+    public Optional<Task> viewTaskById(Long id) {
+        return taskRepository.findById(id);
+    }
+
     private List<TaskDto> convertToTaskDtoList(List<Task> tasks) {
         return tasks.stream()
                 .map(this::convertToTaskDto)
