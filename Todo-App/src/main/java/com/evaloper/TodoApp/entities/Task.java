@@ -29,5 +29,5 @@ public class Task {
     private TaskStatus taskStatus;
     @ManyToOne
     @JoinColumn(name = "user_id")
-    private User userid;
+    private User userId;
 }

@@ -4,6 +4,7 @@ import com.evaloper.TodoApp.dto.TaskDto;
 import com.evaloper.TodoApp.entities.Task;
 import com.evaloper.TodoApp.entities.User;
 import com.evaloper.TodoApp.enums.TaskStatus;
+import com.evaloper.TodoApp.exceptions.TaskNotFoundException;
 import com.evaloper.TodoApp.exceptions.UserNotFoundException;
 import com.evaloper.TodoApp.repository.TaskRepository;
 import com.evaloper.TodoApp.repository.UserRepository;
@@ -37,7 +38,7 @@ public class TaskServiceImpl implements TaskService {
                 .timeCreated(taskDto.getTimeCreated())
                 .priorityLevel(taskDto.getPriorityLevel())
                 .taskStatus(taskDto.getTaskStatus())
-                .userid(user)
+                .userId(user)
                 .build();
 
         taskRepository.save(task);
@@ -62,7 +63,7 @@ public class TaskServiceImpl implements TaskService {
             existingTask.setTimeCreated(taskDto.getTimeCreated());
             existingTask.setPriorityLevel(taskDto.getPriorityLevel());
             existingTask.setTaskStatus(taskDto.getTaskStatus());
-            // Assuming you are not associating the task with a specific user anymore
+
             return taskRepository.save(existingTask);
         } else {
             return null;
@@ -87,6 +88,22 @@ public class TaskServiceImpl implements TaskService {
         return taskRepository.findById(id);
     }
 
+
+    @Override
+    public boolean deleteTask(Long id) {
+        Task task = taskRepository.findById(id).orElseThrow(()-> new TaskNotFoundException("Task Not Found"));
+        taskRepository.delete(task);
+        return true;
+    }
+
+    @Override
+    public List<TaskDto> findAllTaskByUserId(User userId) {
+        List<Task> tasks = taskRepository.findByUserId(userId);
+
+        return tasks.stream().map(this::convertToTaskDto).collect(Collectors.toList());
+    }
+
+
     private List<TaskDto> convertToTaskDtoList(List<Task> tasks) {
         return tasks.stream()
                 .map(this::convertToTaskDto)
@@ -101,7 +118,6 @@ public class TaskServiceImpl implements TaskService {
         taskDto.setTimeCreated(task.getTimeCreated());
         taskDto.setPriorityLevel(task.getPriorityLevel());
         taskDto.setTaskStatus(task.getTaskStatus());
-        // You might need to map other fields as well
 
         return taskDto;
     }

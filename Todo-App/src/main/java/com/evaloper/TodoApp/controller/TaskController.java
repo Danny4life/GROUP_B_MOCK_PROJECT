@@ -2,17 +2,21 @@ package com.evaloper.TodoApp.controller;
 
 import com.evaloper.TodoApp.dto.TaskDto;
 import com.evaloper.TodoApp.entities.Task;
+import com.evaloper.TodoApp.entities.User;
 import com.evaloper.TodoApp.enums.TaskStatus;
 import com.evaloper.TodoApp.exceptions.TaskNotFoundException;
 import com.evaloper.TodoApp.services.Impl.TaskServiceImpl;
 import com.evaloper.TodoApp.services.TaskService;
+import com.evaloper.TodoApp.services.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @Controller
@@ -20,12 +24,35 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class TaskController {
     private final TaskService taskService;
+    private final UserService userService;
 
     @PostMapping("create-task/{id}")
     public ResponseEntity<TaskDto> createBook(@PathVariable Long id, @RequestBody TaskDto taskDto) {
         taskDto = taskService.createTask(id, taskDto);
 
         return new ResponseEntity<>(taskDto, HttpStatus.CREATED);
+    }
+
+    @GetMapping("/view-all-task/{id}")
+    public ResponseEntity<List<TaskDto>> viewAllTasks(@PathVariable Long id){
+        User user =  userService.findById(id);
+        if(user == null){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        List<TaskDto> allTasks = taskService.findAllTaskByUserId(user);
+        return new ResponseEntity<>(allTasks, HttpStatus.OK);
+    }
+
+
+    @DeleteMapping("/delete-task/{id}")
+    public ResponseEntity<Map<String, Boolean>> deleteTask(@PathVariable Long id) {
+
+        boolean deleted = false;
+        deleted = taskService.deleteTask(id);
+        Map<String, Boolean> response = new HashMap<>();
+        response.put("Delete", deleted);
+
+        return ResponseEntity.ok(response);
     }
 
     @GetMapping("/completed-tasks")
