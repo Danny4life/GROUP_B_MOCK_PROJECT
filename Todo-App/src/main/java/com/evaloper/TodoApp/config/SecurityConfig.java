@@ -40,7 +40,12 @@ public class SecurityConfig {
                         .authenticationEntryPoint(authenticationEntryPoint))
                 .sessionManagement(session -> session
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .httpBasic(Customizer.withDefaults());
+                .httpBasic(Customizer.withDefaults())
+                .logout(logout -> logout
+                        .logoutUrl("/logout") // Specify logout URL
+                        .logoutSuccessUrl("/login?logout") // Redirect to this URL after logout
+                        .invalidateHttpSession(true) // Invalidate HTTP session
+                        .deleteCookies("JSESSIONID")); // Delete session cookie
         security.authenticationProvider(authenticationProvider);
         return security.build();
     }
