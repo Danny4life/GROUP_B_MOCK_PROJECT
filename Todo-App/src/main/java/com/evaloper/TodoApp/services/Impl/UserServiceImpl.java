@@ -13,6 +13,8 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
@@ -77,4 +79,12 @@ public class UserServiceImpl implements UserService {
                         .build())
                 .build();
     }
+
+    @Override
+    public User findById(long userId) {
+        Optional<User> userOptional = userRepository.findById(userId);
+        return userOptional.orElse(null);
+    }
+
+
 }

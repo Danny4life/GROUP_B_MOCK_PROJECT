@@ -23,11 +23,12 @@ public class Task {
     private String description;
     private LocalDate dateCreated;
     private LocalTime timeCreated;
+    private LocalDate deadline;
     @Enumerated(EnumType.STRING)
     private PriorityLevel priorityLevel;
     @Enumerated(EnumType.STRING)
     private TaskStatus taskStatus;
     @ManyToOne
     @JoinColumn(name = "user_id")
-    private User userid;
+    private User userId;
 }
