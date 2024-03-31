@@ -36,6 +36,7 @@ public class TaskServiceImpl implements TaskService {
                 .description(taskDto.getDescription())
                 .dateCreated(taskDto.getDateCreated())
                 .timeCreated(taskDto.getTimeCreated())
+                .deadline(taskDto.getDeadline())
                 .priorityLevel(taskDto.getPriorityLevel())
                 .taskStatus(taskDto.getTaskStatus())
                 .userId(user)
@@ -61,6 +62,7 @@ public class TaskServiceImpl implements TaskService {
             existingTask.setDescription(taskDto.getDescription());
             existingTask.setDateCreated(taskDto.getDateCreated());
             existingTask.setTimeCreated(taskDto.getTimeCreated());
+            existingTask.setDeadline(taskDto.getDeadline());
             existingTask.setPriorityLevel(taskDto.getPriorityLevel());
             existingTask.setTaskStatus(taskDto.getTaskStatus());
 
@@ -116,9 +118,12 @@ public class TaskServiceImpl implements TaskService {
         taskDto.setDescription(task.getDescription());
         taskDto.setDateCreated(task.getDateCreated());
         taskDto.setTimeCreated(task.getTimeCreated());
+        taskDto.setDeadline(task.getDeadline());
         taskDto.setPriorityLevel(task.getPriorityLevel());
         taskDto.setTaskStatus(task.getTaskStatus());
 
         return taskDto;
     }
+
+
 }
