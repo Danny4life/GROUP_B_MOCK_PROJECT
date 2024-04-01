@@ -20,6 +20,7 @@ public class TaskDto {
     private String description;
     private LocalDate dateCreated;
     private LocalTime timeCreated;
+    private LocalDate deadline;
     private PriorityLevel priorityLevel;
     private TaskStatus taskStatus;
 }
